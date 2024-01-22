@@ -1,7 +1,3 @@
-//use core::slice::SlicePattern;
-
-
-
 const MY_CONST: i32 = 5;
 fn main() {
 
@@ -100,6 +96,18 @@ fn main() {
     println!("emp1: {}", emp1.full_name());
     println!("emp1: {}", Employee::default_name());
 
+    // Enums
+    // Data types can be different
+    let c = Color::BrunCaca;
+    println!("c: {:?}", c);
+    match c {
+        Color::Red => println!("Red"),
+        Color::Blue => println!("Blue"),
+        Color::Green => println!("Green"),
+        Color::BrunCaca => println!("BRUN CACA")
+    }
+    
+
 }
 
 fn update_colors(colors_slice: &mut [&str]) {
@@ -125,3 +133,10 @@ impl Employee {
     }
 }
 
+#[derive(Debug)]
+enum Color {
+    Red,
+    Green,
+    Blue,
+    BrunCaca
+}
