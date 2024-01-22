@@ -108,7 +108,16 @@ fn main() {
         Color::Green => println!("Green"),
         Color::BrunCaca => println!("BRUN CACA")
     }
-    
+
+    // Generics
+    let p = Point { x: 10, y: 20 };
+    println!("p: {:?}", p);
+    let p2 = Point { x: 10.0, y: 20.0 };
+    println!("p2: {:?}", p2);
+    let p3 = Point { x: "Dix", y: "Vingt" };
+    println!("p3: {:?}", p3);
+    let p4 = Point {x:10, y:"Vingt"};
+    println!("p4: {:?}", p4);
 
 }
 
@@ -141,4 +150,10 @@ enum Color {
     Green,
     Blue,
     BrunCaca
+}
+
+#[derive(Debug)]
+struct Point<T, V> {
+    x: T,
+    y: V
 }
