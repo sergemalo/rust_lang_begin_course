@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 const MY_CONST: i32 = 5;
 fn main() {
 
