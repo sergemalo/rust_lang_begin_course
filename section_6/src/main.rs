@@ -17,4 +17,19 @@ fn main() {
     let y = if x < 5 { true } else { false };
     println!("Y: {}", y);
 
+    // Match
+    match x {
+        0 => println!("Zero"),
+        1 => println!("One"),
+        2 => println!("Two"),
+        _ => println!("Other")
+    }       // ===> NO SEMICOLON!
+    // Match can return a value
+    let y = match x {
+        0 => "Zero",
+        1 => "One",
+        2 => "Two",
+        _ => "Other"
+    };        // ===> SEMICOLON!
+    println!("Y: {}", y);
 }
