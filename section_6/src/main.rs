@@ -75,5 +75,19 @@ fn main() {
         println!("{}: {}", pos, i);
     }
 
+
+    // While loop
+    let mut i = 0;
+    while i < 3 {
+        println!("While Loop: {}", i);
+        i += 1;
+    }
+    loop {
+        println!("Loop");
+        break;
+    }
+
+
+
 }
 
