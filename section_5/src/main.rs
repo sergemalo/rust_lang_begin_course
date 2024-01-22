@@ -74,6 +74,19 @@ fn main() {
     let slice_to_arr2 = &mut colors[1..3];
     update_colors(slice_to_arr2); // use the defined slice
     println!("colors: {:?}", colors);
+
+
+    // Tuples
+    // They are STATIC, but values can be changed
+    // Indexed with the "." operator
+    // LIMIT OF 12 ELEMENTS !!!
+    let mut person = ("John", "Doe", 32);
+    println!("person: {:?}", person);
+    person.2 = 33;
+    print!("person: {}, {}, {}", person.0, person.1, person.2);
+    let (first, last, age) = person;
+    println!("first: {}, last: {}, age: {}", first, last, age);
+    
     
 
 }
