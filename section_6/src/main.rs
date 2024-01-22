@@ -43,5 +43,37 @@ fn main() {
         (x, 0) => println!("On the X axis at X: {}", x),
         (0, y) => println!("On the Y axis at Y: {}", y),
         (x, y) => println!("Point at ({}, {}) ", x, y)
+    };
+
+    // For loops
+    for i in 0..3 {
+        println!("For Loop: {}", i);
     }
+
+    let pets = ["Cat", "Dog", "Hamster"];
+    let pets3 = ["WWW", "Cat", "Dog", "Hamster"];
+    for pet in pets {
+        if pet == "Dog" {
+            continue;
+        }
+        println!("Pet: {}", pet);
+    }
+    for pet in pets.iter() {
+        if pet == &"Dog" {
+            continue;
+        }
+        println!("Pet: {}", pet);
+    }
+    for pet in pets3.iter() {
+        if pet == &"Dog" {
+            continue;
+        }
+        println!("Pet: {}", pet);
+    }
+    // ENUMERATE !!!
+    for (pos, i) in pets3.iter().enumerate() {
+        println!("{}: {}", pos, i);
+    }
+
 }
+
