@@ -87,10 +87,41 @@ fn main() {
     let (first, last, age) = person;
     println!("first: {}, last: {}, age: {}", first, last, age);
     
-    
+    // Structures
+    // Key/Value pair OR Class
+    let emp1 = Employee {
+        first_name: "John".to_string(),
+        last_name: "Doe".to_string(),
+        dept: "Engineering".to_string(),
+        age: 32
+    };
+    println!("emp1: {:?}", emp1);
+    println!("emp1: {}, {}, {}, {}", emp1.first_name, emp1.last_name, emp1.dept, emp1.age);
+    println!("emp1: {}", emp1.full_name());
+    println!("emp1: {}", Employee::default_name());
 
 }
 
 fn update_colors(colors_slice: &mut [&str]) {
     colors_slice[1] = "brown";
 }
+
+#[derive(Debug)]    // Add the "Debug" trait to print the contents of a struct
+struct Employee {
+    first_name: String,
+    last_name: String,
+    dept: String,
+    age: u8
+}
+
+impl Employee {
+    fn full_name(&self) -> String {
+        format!("{} {}", self.first_name, self.last_name)
+    }
+
+    // Static method: does use the self parameter
+    fn default_name() -> String {
+        "Gros Tas".to_string()
+    }
+}
+
