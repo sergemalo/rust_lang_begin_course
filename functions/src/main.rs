@@ -1,4 +1,4 @@
-use std::ops::{DerefMut};
+use std::ops::DerefMut;
 
 
 // Defining my own class
