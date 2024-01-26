@@ -16,7 +16,7 @@ fn main() {
 
 
     // PASSING BY VALUE
-    // Pass a CONSTANT value
+    println!("---- Pass a CONSTANT value -----");
     let value: i32 = 17_000_000;
     println!("My Value {} is at address: 0x{:p}", value, &value);
     show_value(value);
@@ -35,27 +35,40 @@ fn main() {
     show_value(my_big.clone());             // My Struct must be cloned - Copy trait not implemented
     show_value_struct(my_big.clone());      // My Struct must be cloned - Copy trait not implemented
 
-
+    println!("---- Pass a mutable value -----");
+    // Nothing is different from the previous section
     let mut value: i32 = 17_000_001;
     println!("My Value {} is at address: 0x{:p}", value, & value);
     show_value(value);
+    show_value_i32(value);
     value = 17_000_002;
     println!("My Value {} is at address: 0x{:p}", value, & value);
-
     show_mut_value(value);
     println!("My Value {} is at address: 0x{:p}", value, & value);
 
-
-    // Pass by reference to value
+    /////////////////////////////////////////////////////
+    println!("---- Pass by reference to value -----");
     let value: i32 = 17_000_003;
     let ref_value = & value;
     println!("My Value {} is at address: 0x{:p}", value, & value);
     println!("My Reference to Value {} points to: 0x{:p}", ref_value, ref_value);
     println!("My Reference to Value {} is at address: 0x{:p}", ref_value, & ref_value);
-    show_ref_value(&value);
+    show_ref_value_i32(&value);
+    show_ref_value(ref_value);
+    let ref_value = & my_string;
+    println!("My String {} is at address: 0x{:p}", my_string, & my_string);
+    println!("My Reference to String {} points to: 0x{:p}", ref_value, ref_value);
+    println!("My Reference to String {} is at address: 0x{:p}", ref_value, & ref_value);
+    show_ref_value_string(&my_string);
+    show_ref_value(ref_value);
+    let ref_value = & my_big;
+    println!("My Big {:?} is at address: 0x{:p}", my_big, & my_big);
+    println!("My Reference to Big {:?} points to: 0x{:p}", ref_value, ref_value);
+    println!("My Reference to Big {:?} is at address: 0x{:p}", ref_value, & ref_value);
+    show_ref_value_struct(&my_big);
     show_ref_value(ref_value);
 
-    // Pass by reference to mutable value
+    println!("---- Pass by reference to mutable value -----");
     let mut value: i32 = 17_000_004;
     println!("My Value {} is at address: 0x{:p}", value, & value);
     change_ref_to_mut_value(& mut value); // NOTE: "mut" must be added, otherwise it will be a reference to a non-mutable value
@@ -117,9 +130,22 @@ fn show_mut_value(mut m_value: i32) {
 
 //////////////////////////////////////
 // Pass by reference to value
- fn show_ref_value(ref_value: &i32) {
-    println!("  show_ref_value - Input value {} is at address: 0x{:p}", ref_value, &ref_value);
+ fn show_ref_value_i32(ref_value: &i32) {
+    println!("  show_ref_value - Input value {} points to {:p} is at address: 0x{:p}", ref_value, ref_value, &ref_value);
 }
+
+fn show_ref_value_string(ref_value: &String) {
+    println!("  show_value_string - Input value {} points to {:p}  is at address: 0x{:p}", ref_value, ref_value, &ref_value);
+}
+
+fn show_ref_value_struct(ref_value: &MyBigStruct) {
+    println!("  show_value_struct - Input value {:?} points to {:p}  is at address: 0x{:p}", ref_value, ref_value, &ref_value);
+}
+
+fn show_ref_value<T: std::fmt::Debug>(ref_value: &T) {
+    println!("  show_value<T> - Input value {:?} points to {:p}  is at address: 0x{:p}", ref_value, ref_value, &ref_value);
+}
+
 
 // Pass by reference to mutable value
 fn change_ref_to_mut_value(ref_to_m_value: &mut i32) {
