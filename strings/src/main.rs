@@ -2,6 +2,7 @@ fn main() {
 
     // Rules for me:
     // Use constant string slices (str&) as much as possible
+    // Use String when you need to use the string as a buffer that can have varying size
 
     //let mut a:&str = "ZZZ";
     //let b:&mut &str = &mut a;
