@@ -1,5 +1,7 @@
 fn main() {
 
+    // Rules for me:
+    // Use constant string slices (str&) as much as possible
 
     //let mut a:&str = "ZZZ";
     //let b:&mut &str = &mut a;

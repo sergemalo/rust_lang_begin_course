@@ -65,6 +65,7 @@ fn main() {
       Passing a reference is more efficient than passing a copy of the value
       The refenrence is never changed: it stays at the same memory address, and continues to point to the same address (where the value is changed)
     
+    // TO BE RE-VERFIED
     3 is useless, we must use 1 instead
       Passing a mutable reference will in fact copy the reference used by the function
       The function can change the reference to point to another value, but the original reference is unchanged.
