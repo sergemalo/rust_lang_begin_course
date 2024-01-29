@@ -1,5 +1,4 @@
-use std::ops::DerefMut;
-
+use std::ops::Deref;
 
 // Defining my own class
 // I can add the "Clone" trait to be able to clone it
@@ -202,13 +201,16 @@ fn change_ref_to_mut_value_string(mut_ref: &mut String) {
     println!("  change_ref_to_mut_value_string - After modification, Input value {} is at address: 0x{:p}", mut_ref, &mut_ref);
 }
 
-fn change_ref_to_mut_value_struct(mut mut_ref: &mut MyBigStruct) {
-    println!("  change_ref_to_mut_value_struct - Input value {:?} is at address: 0x{:p}", mut_ref, &mut_ref);
-    mut_ref.deref_mut().first_name = "Steph".to_string();
-    mut_ref.deref_mut().last_name = "Tibo".to_string();
+fn change_ref_to_mut_value_struct(mut_ref: &mut MyBigStruct) {
+    println!("  change_ref_to_mut_value_struct - Input value {:?} is at address: 0x{:p}, points to {:p}", mut_ref, &mut_ref, mut_ref);
+    (*mut_ref).first_name = "Steph".to_string();
+    (*mut_ref).last_name = "Tibo".to_string();
     (*mut_ref).phone_number = "514-555-1111".to_string(); 
     (*mut_ref).age = 49;
-    println!("  change_ref_to_mut_value_struct - After modification, Input value {:?} is at address: 0x{:p}", mut_ref, &mut_ref);
+    println!("Age: {}", (*mut_ref).age);
+    println!("Age: {}", (*(mut_ref.deref())).age); // I can print with the deref trait
+    //(*(mut_ref.deref())).age = 50;                 // I can't modify with the deref trait
+    println!("  change_ref_to_mut_value_struct - After modification: {:?}", mut_ref);
 }
 
 fn change_ref_to_mut_value<T: std::fmt::Debug>(mut_ref: &mut T) {
