@@ -2,6 +2,36 @@
 // Global Variables are unsafe
 static mut  MY_GLOBAL:i32 = 666;
 
+// Macros must be defined before we use them
+macro_rules! my_macro {
+    () => (println!("FIRST MARCO"))
+}
+
+macro_rules! name {
+    ($name: expr) => (println!("Salut {}", $name))
+}
+
+macro_rules! name_star {
+    ($($name: expr),*) => {
+        $(println!("Salut {}", $name);)*        
+        $(println!("{}. t'es dont ben laite", $name);)*        
+    };
+}
+
+macro_rules! xy {
+    (x=> $e: expr) => (println!("x = {}", $e));
+    (y=> $e: expr) => (println!("y = {}", $e));
+}
+
+// ident is for "identifiers" - Here, the macro writes a function for us.
+macro_rules! build_fn {
+    ($fn_name: ident) => {
+        fn $fn_name() {
+            println!("{} called", stringify!($fn_name));
+        }
+    };
+}
+
 fn main() {
     
     // FUNCTIONS
@@ -71,7 +101,24 @@ fn main() {
         .fold(0, |sum, x| sum + x);
     println!("Sum = {}", sum);
 
+
+
+    // MACROS
+    // "Meta programming"
+    // Macros are a way to write code that writes code.
+    // Examples: println! and debug! and format!
+    // macro_rules! my_macro {
+    //     (match) => (code to run)
+    // }
+    my_macro!();
+    name!("Bob");
+    name_star!("Alice", "Bob", "Charlie");
+    xy!(x => 4);
+    xy!(y => 5*2);
+    build_fn!(hello);   // Write the function
+    hello();            // Call the function
 }
+
 
 fn is_even(x: i32) -> bool {
     x % 2 == 0
