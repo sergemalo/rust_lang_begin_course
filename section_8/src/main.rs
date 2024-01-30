@@ -106,6 +106,21 @@ fn get_animal(rand_number: f64) -> Box<dyn Animal2> {
     }
 }
 
+// A trait can be added to a struct we have not created
+trait MySummable<T>{
+    fn sum(&self) -> T;
+}
+
+impl MySummable<i32> for Vec<i32> {
+    fn sum(&self) -> i32 {
+        let mut sum = 0;
+        for i in self {
+            sum += i;
+        }
+        sum
+    }
+}
+
 
 fn main() {
     let rust_dev = RustDev::new(true);
@@ -131,4 +146,8 @@ fn main() {
     println!("Aminal says: {}", animal.speak());
     let animal = get_animal(2.2);
     println!("Aminal says: {}", animal.speak());
+
+    // Adding traits to structs
+    let numbers = vec![1, 2, 3];
+    println!("Sum of numbers: {}", numbers.sum());
 }
