@@ -75,6 +75,38 @@ fn bark_it<T: Bark>(dev: T) {
     println!("{}", dev.bark());
 }
 
+
+// Returning Traits
+// The compiler needs to know the space required for a function return type.
+// Workaround: return a "box" with a "dyn" trait
+struct Dog2 {}
+struct Cat2 {}
+
+trait Animal2 {
+    fn speak(&self) -> &'static str;
+}
+
+impl Animal2 for Dog2 {
+    fn speak(&self) -> &'static str {
+        "woof"
+    }
+}
+
+impl Animal2 for Cat2 {
+    fn speak(&self) -> &'static str {
+        "meow"
+    }
+}
+
+fn get_animal(rand_number: f64) -> Box<dyn Animal2> {
+    if rand_number < 0.5 {
+        Box::new(Dog2 {})
+    } else {
+        Box::new(Cat2 {})
+    }
+}
+
+
 fn main() {
     let rust_dev = RustDev::new(true);
     let java_dev = JavaDev::new(false);
@@ -93,4 +125,10 @@ fn main() {
     bark_it(dog);
     // bark_it(cat); // NOT IMPLEMENTED!
     cat.meow();
+
+    // Returning Traits example
+    let animal = get_animal(0.2);
+    println!("Aminal says: {}", animal.speak());
+    let animal = get_animal(2.2);
+    println!("Aminal says: {}", animal.speak());
 }
