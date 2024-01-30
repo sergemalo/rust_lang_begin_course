@@ -46,6 +46,35 @@ impl Developer for CDev {
     }
 }
 
+// Trait Generics
+trait Bark {
+    fn bark(&self) -> String;
+}
+
+struct Dog {
+    species: &'static str
+}
+
+struct Cat {
+    color: &'static str
+}
+
+impl Bark for Dog {
+    fn bark(&self) -> String {
+        format!("{} says woof!", self.species)
+    }
+}
+
+impl Cat {
+    fn meow(&self)  {
+        println!("{} cat says meow!", self.color)
+    }
+}
+
+fn bark_it<T: Bark>(dev: T) {
+    println!("{}", dev.bark());
+}
+
 fn main() {
     let rust_dev = RustDev::new(true);
     let java_dev = JavaDev::new(false);
@@ -58,4 +87,10 @@ fn main() {
     println!("I love {}!", rust_dev.language());
     println!("I hate {}!", java_dev.language());
     println!("I hate {}!", c_dev.language());
+
+    let dog = Dog { species: "Iggy" };
+    let cat = Cat { color: "Blue" };
+    bark_it(dog);
+    // bark_it(cat); // NOT IMPLEMENTED!
+    cat.meow();
 }
