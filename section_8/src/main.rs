@@ -140,6 +140,32 @@ impl Add for Point {
     }
 }
 
+// Static dispatch
+
+// A generic trait will be converted to the required type at compile time
+// The compiler will check at compile time if the trait is implemented for the type
+trait DuplicatableToString {
+    fn duplicate(&self) -> String;
+}
+
+impl DuplicatableToString for i32 {
+    fn duplicate(&self) -> String {
+        format!("{}", *self *2)
+    }
+}
+
+impl DuplicatableToString for String {
+    fn duplicate(&self) -> String {
+        format!("{0}{0}", *self)
+    }
+}
+
+// When the compiler sees this, it will create the code for all implementations we have defined
+// This process is called MONOMORPHIZATION (Converting to one form)
+fn duplicatable_to_string<T: DuplicatableToString>(value: T) -> String {
+    value.duplicate()
+}
+
 fn main() {
     let rust_dev = RustDev::new(true);
     let java_dev = JavaDev::new(false);
@@ -175,4 +201,9 @@ fn main() {
     let p2 = Point { x: 2.0, y: 2.0 };
     let p3 = p1 + p2;
     println!("{:?}", p3);
+
+
+    // Static dispatch
+    println!("{}", duplicatable_to_string(10));
+    println!("{}", duplicatable_to_string("Hello".to_string()));
 }
