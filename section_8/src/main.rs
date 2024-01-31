@@ -141,7 +141,6 @@ impl Add for Point {
 }
 
 // Static dispatch
-
 // A generic trait will be converted to the required type at compile time
 // The compiler will check at compile time if the trait is implemented for the type
 trait DuplicatableToString {
@@ -166,6 +165,14 @@ fn duplicatable_to_string<T: DuplicatableToString>(value: T) -> String {
     value.duplicate()
 }
 
+// Dynamic dispatch
+// A generic trait will be converted to the required type at runtime
+// The compiler CANNOT decide at compile time if the trait is implemented for the type, 
+// because we are passing a reference.
+// The advantage of using dynamic dispatch in Rust is that it provides more flexibility at runtime, allowing for easier swapping of implementations and late binding of functions. This can be particularly useful for building extensible and pluggable components.
+fn duplicatable_to_string_dyn(value: &dyn DuplicatableToString) -> String {
+    value.duplicate()
+}
 fn main() {
     let rust_dev = RustDev::new(true);
     let java_dev = JavaDev::new(false);
@@ -206,4 +213,9 @@ fn main() {
     // Static dispatch
     println!("{}", duplicatable_to_string(10));
     println!("{}", duplicatable_to_string("Hello".to_string()));
+
+    // Dynamic dispatch
+    println!("{}", duplicatable_to_string_dyn(&200));
+    println!("{}", duplicatable_to_string_dyn(&"WOA!".to_string()));
+    // println!("{}", duplicatable_to_string_dyn(&200.0)); Even if this is called "dynamic dispatch", the compiler will flag this line as an error.
 }
