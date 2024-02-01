@@ -21,12 +21,12 @@ fn main() {
     println!("---- Pass a CONSTANT value -----");
     let value: i32 = 17_000_000;
     println!("My Value {} is at address: 0x{:p}", value, &value);
-    show_value(value);
-    show_value_i32(value);
+    show_value(value);      // Value is copied, not moved - no ownership is transferred
+    show_value_i32(value);  // Value is copied, not moved - no ownership is transferred
     let my_string = String::from(format!("Hello World!"));
     println!("My String {} is at address: 0x{:p}", my_string, &my_string);
-    show_value(my_string.clone());          // String must be cloned - Copy trait not implemented
-    show_value_string(my_string.clone());   // String must be cloned - Copy trait not implemented
+    show_value(my_string.clone());          // String must be cloned, otherwise is a move operation and ownership is transferred - Copy trait not implemented
+    show_value_string(my_string.clone());   // String must be cloned, otherwise is a move operation and ownership is transferred - Copy trait not implemented
     let my_big = MyBigStruct {
         first_name: "Serge".to_string(),
         last_name: "Malo".to_string(),
