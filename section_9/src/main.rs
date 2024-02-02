@@ -14,6 +14,32 @@
 // Variables can borrow ownership from other variables
 // IMPORTANT "Mutability" has to be the same from the original variable and the borrowing reference
 
+// Lifetimes
+// https://doc.rust-lang.org/book/ch10-02-lifetime-syntax.html
+// Rust prevents parts of object outliving the object
+// fn get_str() -> &'static str {   // static lifetime means that the string is alive as long as the program
+//     "hello"
+// }
+#[derive(Debug)]
+struct Person {
+    name: String
+}
+
+#[derive(Debug)]
+struct Dog<'l>{             // 'l is a lifetime
+    name: String,
+    owner: &'l Person       // Indicate that Person's lifetime is the same as Dog's (the structure)
+}
+
+impl Person {
+    // fn get_name(&self) -> &String {
+    // EQUIVALENT: 
+    fn get_name<'l>(&'l self) -> &'l String {
+    // The lifetime 'l indicates that the returned String will live at least as long as self
+        &self.name
+    }
+}
+
 fn main() {
     // Ownership
     let i = 5;
@@ -56,7 +82,7 @@ fn main() {
     println!("b = {}", *b);
     println!("a = {}", a);
 
-    let mut v = vec![1, 2, 3];
+    let v = vec![1, 2, 3];
     for i in &v {
         println!("{}", i);
         // If we try to change v here, we get a compile error
@@ -65,6 +91,21 @@ fn main() {
         // THIS PERFECTLY MAKES SENS! IN C++, this would compile fine but it is probably a bug !!!
     }
 
+    // Lifetimes
+    let person = Person { name: String::from("John") };
+    let dog = Dog { name: String::from("Fido"), owner: &person };
+    println!("Preson name: {}", person.name);
+    println!("Dog name: {}", dog.name);
+    println!("Dog's owner name: {}", dog.owner.name);
+
+    let mut a: &String = &String::from("No name");
+    {
+         let p2 = Person{name: String::from("Serge")};
+         println!("p2 name = {}", p2.get_name());
+         // a = p2.get_name(); This does not compile - p2 does not live long enough
+        a = person.get_name();
+    }
+    println!("a = {}", a);
     
 }
 
