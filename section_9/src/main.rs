@@ -8,6 +8,11 @@
 // 2) For complex types, memory is owned, so ownership has to be transferred
 
 
+// Borrowing
+// https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html
+// STILL: Only one variable can OWN a piece of memory
+// Variables can borrow ownership from other variables
+// IMPORTANT "Mutability" has to be the same from the original variable and the borrowing reference
 
 fn main() {
     // Ownership
@@ -38,6 +43,28 @@ fn main() {
     let v4 = vec![1, 2, 3];
     print_size_ref(&v4);
     println!("v4 = {:?}", v4);
+
+    // Borrowing
+    let mut a = 6;
+    let b = &mut a;     // b is borrowing memory from a
+    println!("b = {}", *b);
+    println!("a = {}", a);      // immutable borrowing here - b can't be used anymore
+    // println!("b = {}", *b);  // Can't use b anyore, unless we re-declare it (re-borrowing)
+    // *b += 2;                 // Can't use b anyore, unless we re-declare it (re-borrowing)
+    let b = &mut a;     // b is borrowing memory from a
+    *b += 2;
+    println!("b = {}", *b);
+    println!("a = {}", a);
+
+    let mut v = vec![1, 2, 3];
+    for i in &v {
+        println!("{}", i);
+        // If we try to change v here, we get a compile error
+        // because we can't borrow v as mutable
+        //v.push(4);
+        // THIS PERFECTLY MAKES SENS! IN C++, this would compile fine but it is probably a bug !!!
+    }
+
     
 }
 
