@@ -40,6 +40,29 @@ impl Person {
     }
 }
 
+// Reference counted variables
+// https://doc.rust-lang.org/book/ch15-03-reference-counted-pointers.html
+// A structure that can hold multiple references to the same data
+// Note: Rc is not thread safe!!!
+// When you clone an Rc, it only increments the reference count rather than creating a deep copy of the data. 
+// This can be more efficient than copying the entire data, especially for large or complex data structures. 
+// However, it's important to keep in mind that using Rc comes with the overhead of reference counting, so it's best suited for scenarios where the performance impact of reference counting is acceptable.
+
+use std::rc::Rc;
+
+struct Car {
+    brand: Rc<String>
+}
+
+impl Car {
+    fn new(brand: Rc<String>) -> Car {
+        Car { brand }
+    }
+    fn drive(&self) {
+        println!("{} is driving", self.brand);
+    }
+}
+
 fn main() {
     // Ownership
     let i = 5;
@@ -99,6 +122,7 @@ fn main() {
     println!("Dog's owner name: {}", dog.owner.name);
 
     let mut a: &String = &String::from("No name");
+    println!("original name = {}", a);
     {
          let p2 = Person{name: String::from("Serge")};
          println!("p2 name = {}", p2.get_name());
@@ -106,6 +130,17 @@ fn main() {
         a = person.get_name();
     }
     println!("a = {}", a);
+
+    // Reference counted variables
+    let brand = Rc::new(String::from("Toyota"));
+    println!("My car is a {}", brand);
+    println!("Pointers: {} {}", Rc::strong_count(&brand), Rc::weak_count(&brand));
+    {
+        let car1 = Car::new(brand.clone());
+        car1.drive();
+        println!("Pointers: {} {}", Rc::strong_count(&brand), Rc::weak_count(&brand));
+    }
+    println!("My car is a {}", brand);
     
 }
 
