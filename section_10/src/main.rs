@@ -1,5 +1,14 @@
 
 
+// 2 types of error: 
+// Unrecoverable: panic!
+// Recoverable: return enum
+
+// panic! macro stops the execution with a message
+
+// return enum
+
+
 // Error handling with files
 use std::fs::{File, OpenOptions, remove_file};
 use std::io::Write;
@@ -7,6 +16,32 @@ use std::io::Read;
 
 
 fn main() {
+    
+    // PANIC example
+    // let v = vec![1, 2, 3];
+    // v[99];  -- this will panic
+    // PANIC example 2
+    // panic!("crash and burn");
+
+    // matching on Result enum
+    /*
+    let f = File::open("cacacaca.txt");
+    match f {
+        Ok(file) => {
+            println!("File found:\n{:?}", file);
+        }
+        Err(error) => {
+            panic!("Problem opening the file:\n{:?}", error)
+        },
+    };
+    */
+
+    divide(Some(10));
+    divide(Some(100));
+    divide(None);
+    divide(Some(0));
+    
+    
     // Create write-only file
     let mut f = File::create("hello.txt").expect("Creating a file failed");
     f.write_all("HELLO WORLD\n".as_bytes()).expect("Writing to a file failed");
@@ -26,4 +61,26 @@ fn main() {
     // Delete a file
     remove_file("hello.txt").expect("Deleting a file failed");
 
+
+
+
+}
+
+const REPONSE_UNI: i32 = 42;
+
+fn divide(x: Option<i32>) -> i32 {
+    let my_result: i32;
+    match x {
+        Some(0) => panic!("Dividing by zero"),
+        Some(x) => {
+            my_result = x/REPONSE_UNI;
+            println!("Your value divided by {} is {}", x, my_result);
+        }
+        None => {
+            println!("No value provided");
+            my_result = REPONSE_UNI;
+        }
+    }
+    println!("Result: {}", my_result);
+    my_result
 }
