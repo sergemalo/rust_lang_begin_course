@@ -15,6 +15,9 @@ use std::io::Write;
 use std::io::Read;
 
 
+// Error handling Helper methods
+// unwrap
+
 fn main() {
     
     // PANIC example
@@ -39,7 +42,7 @@ fn main() {
     divide(Some(10));
     divide(Some(100));
     divide(None);
-    divide(Some(0));
+    //divide(Some(0)); This will panic
     
     
     // Create write-only file
@@ -62,6 +65,21 @@ fn main() {
     remove_file("hello.txt").expect("Deleting a file failed");
 
 
+    // unwrap example
+    //let _f = File::open("cacacaca.txt").unwrap();
+    let _f = File::open("cacacaca.txt").expect("Ton fichier n'existe pas");
+    /*
+    let f = File::open("cacacaca.txt");
+    match f {
+        Ok(file) => {
+            println!("File found:\n{:?}", file);
+        }
+        Err(error) => {
+            panic!("Problem opening the file:\n{:?}", error)
+        },
+    };
+    */
+        
 
 
 }
