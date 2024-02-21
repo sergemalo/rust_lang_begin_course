@@ -18,6 +18,26 @@ use std::io::Read;
 // Error handling Helper methods
 // unwrap
 
+fn read_user_name_from_file() -> Result<String, std::io::Error> {
+    let f = File::open("username.txt");
+    let mut f = match f {
+        Ok(file) => file,
+        Err(e) => return Err(e),
+    };
+    let mut s = String::new();
+    match f.read_to_string(&mut s) {
+        Ok(_) => Ok(s),
+        Err(e) => Err(e),
+    }
+}
+
+fn read_user_name_from_file2() -> Result<String, std::io::Error> {
+    let mut f = File::open("username.txt")?;            // ? operator   Same as unwrap()
+    let mut s = String::new();
+    f.read_to_string(&mut s)?;
+    Ok(s)
+}
+
 fn main() {
     
     // PANIC example
@@ -67,7 +87,7 @@ fn main() {
 
     // unwrap example
     //let _f = File::open("cacacaca.txt").unwrap();
-    let _f = File::open("cacacaca.txt").expect("Ton fichier n'existe pas");
+    //let _f = File::open("cacacaca.txt").expect("Ton fichier n'existe pas");
     /*
     let f = File::open("cacacaca.txt");
     match f {
@@ -80,6 +100,15 @@ fn main() {
     };
     */
         
+
+
+    // ? Operator
+    // When we don't care about the error
+    let a = read_user_name_from_file();
+    println!("User name: {:?}", a);
+
+    let a = read_user_name_from_file2();
+    println!("User name: {:?}", a);
 
 
 }
