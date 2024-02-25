@@ -22,7 +22,7 @@ fn main() {
             println!("Client {} connected", addr);
 
             // Now, we have a new client connected
-            // We need to create a thread, to handle seperately all the clients
+            // We need to create a thread. Each thread will  seperately to one of the clients
             // The thread is a simple non-blocking loop listening for messages
             let tx = tx.clone();
             clients.push(socket.try_clone().expect("Failed to clone client"));
@@ -31,9 +31,10 @@ fn main() {
                 match socket.read_exact(&mut buff) {
                     Ok(_) => {
                         let msg = buff.into_iter().take_while(|&x| x != 0).collect::<Vec<_>>();
-                        let msg = String::from_utf8(msg).expect("Invalid utf8 message");
+                        let mut msg = String::from_utf8(msg).expect("Invalid utf8 message");
 
                         println!("{}: {:?}", addr, msg);
+                        msg = format!("Echoing: {:?}", msg);
                         tx.send(msg).expect("Failed to send msg");
 
                     },
