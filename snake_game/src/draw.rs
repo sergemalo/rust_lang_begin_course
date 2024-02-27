@@ -13,7 +13,7 @@ pub fn to_coord_u32(game_coord: i32) -> u32 {
 }
 */
 
-/* 
+ 
 pub fn draw_block(color: Color, x: i32, y: i32, con: &Context, g: &mut G2d) {
     let gui_x = to_coord(x);
     let gui_y = to_coord(y);
@@ -24,7 +24,7 @@ pub fn draw_block(color: Color, x: i32, y: i32, con: &Context, g: &mut G2d) {
         g,
     );
 }
-*/
+
 
 pub fn draw_rectangle(
     color: Color,
