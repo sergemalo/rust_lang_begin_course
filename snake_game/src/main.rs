@@ -3,6 +3,7 @@ extern crate rand;
 
 mod draw;
 mod game;
+mod snake;
 
 use piston_window::*;
 //use crate::game;
