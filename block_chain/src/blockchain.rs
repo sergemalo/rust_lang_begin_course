@@ -8,14 +8,14 @@ use std::fmt::Write;
 use serde_derive::Serialize;
 
 #[derive(Debug, Clone, Serialize)]
-struct Transaction {
+pub struct Transaction {
     sender: String,
     receiver: String,
     amount: f32,
 }
 
 #[derive(Debug, Clone, Serialize)]
-struct Blockheader {
+pub struct Blockheader {
     timestamp: i64,
     nonce: u32,
     pre_hash: String,
@@ -24,27 +24,27 @@ struct Blockheader {
 }
 
 #[derive(Debug, Clone, Serialize)]
-struct Block {
+pub struct Block {
     header: Blockheader,
     count: u32,
     transactions: Vec<Transaction>, 
 }
 
-struct Chain {
+pub struct Chain {
     blocks: Vec<Block>,
     curr_transaction: Vec<Transaction>,
     difficulty: u32,
-    minor_addr: String,
+    miner_addr: String,
     reward: f32,
 }
 
 impl Chain {
-    pub fn new(minor_addr: String, difficulty: u32) -> Chain {
+    pub fn new(miner_addr: String, difficulty: u32) -> Chain {
         let mut chain = Chain {
             blocks: Vec::new(),
             curr_transaction: Vec::new(),
             difficulty,
-            minor_addr,
+            miner_addr,
             reward: 100.0,
         };
 
@@ -63,7 +63,7 @@ impl Chain {
 
         let reward_trans = Transaction {
             sender: String::from("Root"),
-            receiver: self.minor_addr.clone(),
+            receiver: self.miner_addr.clone(),
             amount: self.reward,
         };
 
